@@ -4,7 +4,7 @@ public class Main {
 
     Main() {
 
-        FileManager main = new FileManager("C:\\Users\\pvs12\\", "Pictures");
+        FileManager main = new FileManager("C:\\Users\\pvs12\\", "Downloads");
 
     }
 

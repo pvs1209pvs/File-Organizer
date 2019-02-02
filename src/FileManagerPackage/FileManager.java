@@ -8,10 +8,10 @@ import java.util.TreeSet;
 class FileManager {
 
     private File folder;
-    private Set<FileExtension> fileExtension;
-    private ArrayList<File> allFiles;
     private String path;
     private String folderName;
+    private Set<FileExtension> fileExtension;
+    private ArrayList<File> allFiles;
 
     FileManager(String path, String folderName) {
 
@@ -56,15 +56,15 @@ class FileManager {
 
     }
 
-    // adds all the files to file extension's set
+    // Adds all the extensions to file extension's set
     private void addAllFileExt() {
 
-        getAllFiles();
+        getAllFiles(this.folder);
         for (File x : allFiles) fileExtension.add(getFileExt(x));
 
     }
 
-    // returns the file extension of a given file.
+    // Returns the file extension of the passed given file.
     private FileExtension getFileExt(File file) {
 
         StringBuilder ext = new StringBuilder();
@@ -78,11 +78,14 @@ class FileManager {
 
     }
 
-    // returns an array list of all the files in a folder.
-    private void getAllFiles() {
+    // Adds all the file to the File ArrayList
+    private void getAllFiles(File fullPath ) {
 
-        File[] dirContents = folder.listFiles();
-        for (File x : dirContents) if (x.isFile()) this.allFiles.add(x);
+        File[] dirContents = fullPath.listFiles();
+        for (File x : dirContents){
+            if (x.isDirectory()) getAllFiles(x);
+            if (x.isFile()) this.allFiles.add(x);
+        }
 
     }
 

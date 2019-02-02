@@ -2,7 +2,7 @@ package FileManagerPackage;
 
 class FileExtension implements Comparable<FileExtension> {
 
-    private final String fileExt;
+    private final String fileExt; // extension of the a file
 
     FileExtension(String fileExt) {
         this.fileExt = fileExt;
