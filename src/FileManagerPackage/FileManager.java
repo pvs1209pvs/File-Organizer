@@ -39,7 +39,7 @@ class FileManager {
             for (int j = 0; j < allFiles.size(); j++) {
                 if (fileExtArray[i].getFileExt().equals(getFileExt(allFiles.get(j)).getFileExt())) {
                     File toMove = new File(allFiles.get(j).toString());
-                    toMove.renameTo(new File(this.path + this.folderName + "\\" + fileExtArray[i].getFileExt() + "\\" + allFiles.get(j).getName()));
+                    toMove.renameTo(new File(this.path + this.folderName + File.separator + fileExtArray[i].getFileExt() + File.separator + allFiles.get(j).getName()));
                 }
             }
         }
@@ -50,7 +50,7 @@ class FileManager {
     private void makeDirs() {
 
         for (FileExtension fileExt : fileExtension) {
-            File dir = new File(this.path + this.folderName + "\\" + fileExt.getFileExt());
+            File dir = new File(this.path + this.folderName + File.separator + fileExt.getFileExt());
             dir.mkdir();
         }
 
@@ -79,10 +79,10 @@ class FileManager {
     }
 
     // Adds all the file to the File ArrayList
-    private void getAllFiles(File fullPath ) {
+    private void getAllFiles(File fullPath) {
 
         File[] dirContents = fullPath.listFiles();
-        for (File x : dirContents){
+        for (File x : dirContents) {
             if (x.isDirectory()) getAllFiles(x);
             if (x.isFile()) this.allFiles.add(x);
         }
