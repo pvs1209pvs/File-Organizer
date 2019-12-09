@@ -88,5 +88,17 @@ class FileManager {
         }
 
     }
+    
+    private void cleanUp(){
+        
+        File[] currentDir = new File(path+folderName).listFiles();
+
+        if(currentDir==null) return;
+
+        for (File x : currentDir){
+            x.delete();
+        }
+        
+    }
 
 }
