@@ -2,6 +2,7 @@ package com.company;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -13,7 +14,7 @@ class FileManager {
     FileManager(String path) {
    
         parentFolder = new File(path);
-        fileExtensions = new TreeSet<>();
+        fileExtensions = new HashSet<>();
 
         moveToExtensionDir(parentFolder);
         cleanUp(parentFolder);

@@ -1,20 +1,15 @@
 package com.company;
 
-class FileExtension implements Comparable<FileExtension> {
+class FileExtension {
 
-    private final String fileExt; // extension of the a file
+    private final String fileExt; // extension of the file
 
     FileExtension(String fileExt) {
-        this.fileExt = new String(fileExt);
+        this.fileExt = fileExt;
     }
 
     String getFileExt() {
-        return new String(fileExt);
-    }
-
-    @Override
-    public int compareTo(FileExtension o) {
-        return this.getFileExt().compareTo(o.getFileExt());
+        return fileExt;
     }
 
     @Override

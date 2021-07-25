@@ -3,6 +3,8 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        new FileManager("/home/pvs/Pictures");
+        // args[0] is the parent directory that needs to be sorted.
+        new FileManager(args[0]);
     }
+    
 }
