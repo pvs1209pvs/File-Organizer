@@ -20,6 +20,10 @@ class FileManager {
 
     }
 
+    /**
+     * Moves files to the directory corresponding to its extension.
+     * @param crntDir Current parent directory.
+     */
     private void moveToExtensionDir(File crntDir){
 
         Arrays.stream(crntDir.listFiles()).forEach(crntFile -> {
@@ -47,12 +51,18 @@ class FileManager {
     /**
      * Returns the extension of the file.
      * @param file File whose extension needs to be returned.
-     * @return FileExtension object.
+     * @return The FileExtension object with the extension of the file. 
+     * FileExtension object with the value of 'no-extn' is returned if the file has no extension.
      */
     private FileExtension getFileExt(File file) {
 
         String pathToString =  file.toPath().toString();
-        return new FileExtension(pathToString.substring(pathToString.indexOf('.', 0)+1,pathToString.length()));
+        int dotIndex = pathToString.indexOf('.', 0)+1;
+
+        return 
+        dotIndex > 0 ? 
+        new FileExtension(pathToString.substring(dotIndex, pathToString.length())) : 
+        new FileExtension("no-extn");
 
     }
 

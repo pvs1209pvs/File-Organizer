@@ -5,11 +5,11 @@ class FileExtension implements Comparable<FileExtension> {
     private final String fileExt; // extension of the a file
 
     FileExtension(String fileExt) {
-        this.fileExt = fileExt;
+        this.fileExt = new String(fileExt);
     }
 
     String getFileExt() {
-        return fileExt;
+        return new String(fileExt);
     }
 
     @Override
