@@ -1,17 +1,19 @@
-package com.company;
+package src.com.company;
+
+
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
-class FileManager {
+
+public class FileManager {
 
     private final File parentFolder;
     private final Set<FileExtension> fileExtensions;
 
-    FileManager(String path) {
+    public FileManager(String path) {
    
         parentFolder = new File(path);
         fileExtensions = new HashSet<>();
@@ -81,5 +83,6 @@ class FileManager {
        });
     
     }
+
 
 }
