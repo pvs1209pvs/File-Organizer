@@ -41,10 +41,11 @@ public class FileManager {
                 fileExtensions.add(fileExt);
 
                 // creates the extension-dir 
-                new File(parentFolder.toPath()+"/"+fileExt.getFileExt()).mkdir();
+                System.out.println();
+                new File(parentFolder.toPath()+File.separator+fileExt.getFileExt()).mkdir();
 
                 // moves the file to extension-dir.
-                crntFile.renameTo(new File(parentFolder.toPath()+"/"+fileExt.getFileExt()+"/"+crntFile.getName()));
+                crntFile.renameTo(new File(parentFolder.toPath()+File.separator+fileExt.getFileExt()+File.separator+crntFile.getName()));
             }
             
         });
