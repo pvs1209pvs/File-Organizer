@@ -13,7 +13,7 @@ class FileManagerTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         new File(TEST_DIR).mkdir();
-        Stream.of(TEST_DIR + "a.txt", TEST_DIR + "b.png", TEST_DIR + "c.out", TEST_DIR + "d.html").map(File::new).forEach(x->x.getParentFile().mkdir());
+        Stream.of(TEST_DIR + "a.txt", TEST_DIR + "b.png", TEST_DIR + "c.out", TEST_DIR + "d.html").map(File::new).forEach(x -> x.getParentFile().mkdir());
     }
 
     @Test
@@ -21,7 +21,10 @@ class FileManagerTest {
 
         new FileManager(TEST_DIR);
 
-        List<String> organizedFiles = Stream.of(TEST_DIR + "png/b.png", TEST_DIR + "html/d.html", TEST_DIR + "out/c.out", TEST_DIR + "txt/a.txt").toList();
+        List<String> organizedFiles = Stream.of("png/b.png", "html/d.html", "out/c.out", "txt/a.txt")
+                .map(file -> TEST_DIR + file)
+                .toList();
+
         List<String> algoResult = listSubFiles();
 
         Assertions.assertTrue(organizedFiles.containsAll(algoResult));
@@ -52,12 +55,9 @@ class FileManagerTest {
 
     void delete(File f) {
 
-
         Arrays.stream(Objects.requireNonNull(f.listFiles())).forEach(
                 file -> {
-                    if (file.isDirectory()) {
-                        delete(file);
-                    }
+                    if (file.isDirectory()) delete(file);
                     file.delete();
                 }
         );
