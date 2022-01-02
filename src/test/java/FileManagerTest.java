@@ -4,77 +4,50 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class FileManagerTest {
 
+    final String TEST_DIR = "src/test/java/test-dir/";
+
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-
-        new File("src/test/java/test-dir").mkdir();
-
-        File a = new File("src/test/java/test-dir/a.txt");
-        a.getParentFile().mkdir();
-
-        File b = new File("src/test/java/test-dir/b.png");
-        a.getParentFile().mkdir();
-
-        File c = new File("src/test/java/test-dir/c.out");
-        a.getParentFile().mkdir();
-
-        try {
-            a.createNewFile();
-            b.createNewFile();
-            c.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        File d = new File("src/test/java/test-dir/sub-dir/d.html");
-        d.getParentFile().mkdir();
-
-        try {
-            d.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        new File(TEST_DIR).mkdir();
+        Stream.of(TEST_DIR + "a.txt", TEST_DIR + "b.png", TEST_DIR + "c.out", TEST_DIR + "d.html").map(File::new).forEach(x->x.getParentFile().mkdir());
     }
 
     @Test
-    public void moveToExtdir() {
+    public void moveToExtDir() {
 
-       new FileManager("src/test/java/test-dir");
+        new FileManager(TEST_DIR);
 
-        Set<String> organizedFiles = Stream.of("src/test/java/test-dir/png/b.png", "src/test/java/test-dir/html/d.html", "src/test/java/test-dir/out/c.out", "src/test/java/test-dir/txt/a.txt").collect(Collectors.toCollection(TreeSet::new));
-        Set<String> algoResult = listSubFiles();
+        List<String> organizedFiles = Stream.of(TEST_DIR + "png/b.png", TEST_DIR + "html/d.html", TEST_DIR + "out/c.out", TEST_DIR + "txt/a.txt").toList();
+        List<String> algoResult = listSubFiles();
 
         Assertions.assertTrue(organizedFiles.containsAll(algoResult));
 
     }
 
 
-    private Set<String> listSubFiles() {
+    private List<String> listSubFiles() {
 
-        List<File> organizedFilePaths = new LinkedList<>();
+        File[] dirToOrganize = new File(TEST_DIR).listFiles();
 
-        Arrays.stream(Objects.requireNonNull(new File("src/test/java/test-dir").listFiles()))
+        return Arrays.stream(Objects.requireNonNull(dirToOrganize))
                 .filter(File::isDirectory)
-                .forEach(file -> organizedFilePaths.addAll(Arrays.asList(Objects.requireNonNull(file.listFiles()))));
-
-        return organizedFilePaths.stream().map(File::toString).collect(Collectors.toCollection(TreeSet::new));
-
+                .map(File::listFiles)
+                .filter(Objects::nonNull)
+                .flatMap(Arrays::stream)
+                .map(File::toString)
+                .toList();
 
     }
 
     @org.junit.jupiter.api.AfterEach
     void tearDown() {
-
-        File testDir = new File("src/test/java/test-dir/");
+        File testDir = new File(TEST_DIR);
         delete(testDir);
         testDir.delete();
-
     }
 
     void delete(File f) {
